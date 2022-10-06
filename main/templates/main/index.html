@@ -1,0 +1,660 @@
+{% extends "main/base.html" %}
+
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+<button class="app-sidebar-mobile-backdrop" data-toggle-target=".app" data-toggle-class="app-sidebar-mobile-toggled"></button>
+
+
+<div id="content" class="app-content">
+
+<div class="row">
+
+
+
+<div class="col-xl-6">
+
+<div class="card mb-3">
+
+<div class="card-body">
+
+<div class="d-flex fw-bold small mb-3">
+<span class="flex-grow-1">Weekly Pick</span>
+<a href="#" data-toggle="card-expand" class="text-white text-opacity-50 text-decoration-none"><i class="bi bi-fullscreen"></i></a>
+</div>
+
+
+
+
+
+<div class="row">
+
+<div class="col-lg-6 mb-3 mb-lg-0">
+<div class="d-flex align-items-center">
+{% for rs in loop %}
+<div class="w-50px h-50px">
+<img width="50px" src="{{ rs.image}}">
+</div>
+
+
+<div class="ps-3 flex-1">
+<div class="fs-10px fw-bold text-white text-opacity-50 mb-1">{{ rs.name }} - ({{ rs.symbol }})</div>
+<div class="mb-2 fs-5 text-truncate">{{ rs.current_price }}/ {{rs.price_change_percentage_24h}}%</div>
+<div class="progress h-3px bg-white-transparent-2 mb-1">
+<div class="progress-bar bg-theme" style="width: 20%"></div>
+</div>
+<div class="fs-11px text-white text-opacity-50 mb-2 text-truncate">
+<div class="d-flex align-items-center small">
+
+<div class="flex-1">{{ rs.atl }}</div>
+<div>{{ rs.ath }}</div>
+</div>
+</div>
+<div class="d-flex align-items-center small">
+<i class="bi bi-circle-fill fs-6px me-2 text-theme"></i>
+<div class="flex-1">24hr High</div>
+<div>{{ rs.high_24h|intcomma|floatformat:10 }}</div>
+</div>
+<div class="d-flex align-items-center small">
+<i style="color:red" class="bi bi-circle-fill fs-6px me-2 text-theme text-opacity-50"></i>
+<div class="flex-1">24hr Low</div>
+<div>{{ rs.low_24h|intcomma|floatformat:10 }}</div>
+</div>
+{% endfor %}
+</div>
+
+</div>
+</div>
+
+<div class="col-lg-6 mb-3 mb-lg-0">
+<div class="d-flex align-items-center">
+{% for rs in doken %}
+<div class="w-50px h-50px">
+<img width="50px" src="{{ rs.image}}">
+</div>
+
+
+<div class="ps-3 flex-1">
+<div class="fs-10px fw-bold text-white text-opacity-50 mb-1">{{ rs.name }} - ({{ rs.symbol }})</div>
+<div class="mb-2 fs-5 text-truncate">{{ rs.current_price }}</div>
+<div class="progress h-3px bg-white-transparent-2 mb-1">
+<div class="progress-bar bg-theme" style="width: 20%"></div>
+</div>
+<div class="fs-11px text-white text-opacity-50 mb-2 text-truncate">
+<div class="d-flex align-items-center small">
+
+<div class="flex-1">{{ rs.atl }}</div>
+<div>{{ rs.ath }}</div>
+</div>
+</div>
+<div class="d-flex align-items-center small">
+<i class="bi bi-circle-fill fs-6px me-2 text-theme"></i>
+<div class="flex-1">24hr High</div>
+<div>{{ rs.high_24h|intcomma|floatformat:10 }}</div>
+</div>
+<div class="d-flex align-items-center small">
+<i style="color:red" class="bi bi-circle-fill fs-6px me-2 text-theme text-opacity-50"></i>
+<div class="flex-1">24hr Low</div>
+<div>{{ rs.low_24h|intcomma|floatformat:10 }}</div>
+</div>
+{% endfor %}
+</div>
+
+</div>
+</div>
+
+
+
+
+</div>
+
+</div>
+
+
+<div class="card-arrow">
+<div class="card-arrow-top-left"></div>
+<div class="card-arrow-top-right"></div>
+<div class="card-arrow-bottom-left"></div>
+<div class="card-arrow-bottom-right"></div>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="col-xl-6">
+
+<div class="card mb-3">
+
+<div class="card-body">
+
+<div class="d-flex fw-bold small mb-3">
+<span class="flex-grow-1">Trending Tokens</span>
+<a href="#" data-toggle="card-expand" class="text-white text-opacity-50 text-decoration-none"><i class="bi bi-fullscreen"></i></a>
+</div>
+
+
+
+
+<div class="row gx-4">
+
+<div class="col-lg-6 mb-3 mb-lg-0">
+<table class="w-100 small mb-0 text-truncate text-white text-opacity-60">
+<thead>
+<tr class="text-white text-opacity-75">
+<th class="w-50">TOKEN</th>
+<th class="w-25 text-end">MCAP</th>
+
+</tr>
+</thead>
+{% for item in coins %}
+<tbody>
+<tr>
+
+<td><img src="{{item.item.thumb}}"> {{ item.item.name }}</td>
+<td class="text-end">{{ item.item.market_cap_rank }}</td>
+
+</tr>
+
+
+
+
+</tbody>
+{% endfor%}
+</table>
+</div>
+
+
+<div class="col-lg-6">
+
+<div class="card">
+
+<div class="card-body py-2">
+<div class="d-flex align-items-center">
+<div class="w-70px">
+<div data-render="apexchart" data-type="donut" data-height="70"></div>
+</div>
+<div class="flex-1 ps-2">
+<table class="w-100 small mb-0 text-white text-opacity-60">
+<tbody>
+<tr>
+<td>
+<div class="d-flex align-items-center">
+<div class="w-6px h-6px rounded-pill me-2 bg-theme bg-opacity-95"></div> FEED
+</div>
+</td>
+<td class="text-end">25.70%</td>
+</tr>
+<tr>
+<td>
+<div class="d-flex align-items-center">
+<div class="w-6px h-6px rounded-pill me-2 bg-theme bg-opacity-75"></div> ORGANIC
+</div>
+</td>
+<td class="text-end">24.30%</td>
+</tr>
+<tr>
+<td>
+<div class="d-flex align-items-center">
+<div class="w-6px h-6px rounded-pill me-2 bg-theme bg-opacity-55"></div> REFERRAL
+</div>
+</td>
+<td class="text-end">23.05%</td>
+</tr>
+<tr>
+<td>
+<div class="d-flex align-items-center">
+<div class="w-6px h-6px rounded-pill me-2 bg-theme bg-opacity-35"></div> DIRECT
+</div>
+</td>
+<td class="text-end">14.85%</td>
+</tr>
+<tr>
+<td>
+<div class="d-flex align-items-center">
+<div class="w-6px h-6px rounded-pill me-2 bg-theme bg-opacity-15"></div> EMAIL
+</div>
+</td>
+<td class="text-end">7.35%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+<div class="card-arrow">
+<div class="card-arrow-top-left"></div>
+<div class="card-arrow-top-right"></div>
+<div class="card-arrow-bottom-left"></div>
+<div class="card-arrow-bottom-right"></div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card-arrow">
+<div class="card-arrow-top-left"></div>
+<div class="card-arrow-top-right"></div>
+<div class="card-arrow-bottom-left"></div>
+<div class="card-arrow-bottom-right"></div>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="col-xl-6">
+
+<div class="card mb-3">
+
+<div class="card-body">
+
+<div class="d-flex fw-bold small mb-3">
+<span class="flex-grow-1">TOP TOKENS</span>
+<a href="#" data-toggle="card-expand" class="text-white text-opacity-50 text-decoration-none"><i class="bi bi-fullscreen"></i></a>
+</div>
+
+
+<div class="table-responsive">
+<table class="w-100 mb-0 small align-middle text-nowrap">
+<tbody>
+<tr>
+    {% for rs in doken %}
+<td>
+<div class="d-flex">
+<div class="position-relative mb-2">
+<img src="{{ rs.image }}" width="40px">
+
+</div>
+<div class="flex-1 ps-3">
+
+<div class="fw-500 text-white">{{ rs.name }} ({{ rs.symbol }})</div>
+${{ rs.current_price }}
+</div>
+</div>
+</td>
+
+<td>
+<table class="mb-2">
+<tr>
+<td class="pe-3">Total Supply:</td>
+<td class="text-white text-opacity-75 fw-500">{{ rs.total_supply|intcomma }}</td>
+</tr>
+<tr>
+<td class="pe-3">MCAP:</td>
+<td class="text-white text-opacity-75 fw-500">${{ rs.market_cap|intcomma}}</td>
+</tr>
+<tr>
+<td class="pe-3 text-nowrap">ATH:</td>
+<td class="text-white text-opacity-75 fw-500">{{ rs.ath }}</td>
+</tr>
+</table>
+</td>
+<td><a href="#" class="text-decoration-none text-white"><i class="bi bi-search"></i></a></td>
+{% endfor %}
+</tr>
+<tr>
+    {% for rs in loop %}
+<td>
+<div class="d-flex">
+<div class="position-relative mb-2">
+<img src="{{ rs.image }}" width="40px">
+
+</div>
+<div class="flex-1 ps-3">
+<div class="mb-1"><small class="fs-9px fw-500 lh-1 d-inline-block rounded-0 badge bg-white bg-opacity-25 text-white text-opacity-75 pt-5px">Rank: {{ rs.market_cap_rank }}</small></div>
+
+<div class="fw-500 text-white">{{ rs.name }} ({{ rs.symbol }})</div>
+${{ rs.current_price }}
+</div>
+</div>
+</td>
+
+<td>
+<table class="mb-2">
+<tr>
+<td class="pe-3">Total Supply:</td>
+<td class="text-white text-opacity-75 fw-500">{{ rs.total_supply|intcomma }}</td>
+</tr>
+<tr>
+<td class="pe-3">MCAP:</td>
+<td class="text-white text-opacity-75 fw-500">${{ rs.market_cap|intcomma}}</td>
+</tr>
+<tr>
+<td class="pe-3 text-nowrap">ATH:</td>
+<td class="text-white text-opacity-75 fw-500">{{ rs.ath }}</td>
+</tr>
+</table>
+</td>
+<td><a href="#" class="text-decoration-none text-white"><i class="bi bi-search"></i></a></td>
+{% endfor %}
+</tr>
+<tr>
+    {% for rs in emvos %}
+<td>
+<div class="d-flex">
+<div class="position-relative mb-2">
+<img src="{{ rs.image }}" width="40px">
+
+</div>
+<div class="flex-1 ps-3">
+<div class="mb-1"><small class="fs-9px fw-500 lh-1 d-inline-block rounded-0 badge bg-white bg-opacity-25 text-white text-opacity-75 pt-5px">Rank: {{ rs.market_cap_rank }}</small></div>
+
+<div class="fw-500 text-white">{{ rs.name }} ({{ rs.symbol }})</div>
+${{ rs.current_price }}
+</div>
+</div>
+</td>
+
+<td>
+<table class="mb-2">
+<tr>
+<td class="pe-3">Total Supply:</td>
+<td class="text-white text-opacity-75 fw-500">{{ rs.total_supply|intcomma }}</td>
+</tr>
+<tr>
+<td class="pe-3">MCAP:</td>
+<td class="text-white text-opacity-75 fw-500">${{ rs.market_cap|intcomma}}</td>
+</tr>
+<tr>
+<td class="pe-3 text-nowrap">ATH:</td>
+<td class="text-white text-opacity-75 fw-500">{{ rs.ath }}</td>
+</tr>
+</table>
+</td>
+<td><a href="#" class="text-decoration-none text-white"><i class="bi bi-search"></i></a></td>
+{% endfor %}
+</tr>
+
+<tr>
+    {% for rs in cronos %}
+<td>
+<div class="d-flex">
+<div class="position-relative mb-2">
+<img src="{{ rs.image }}" width="40px">
+
+</div>
+<div class="flex-1 ps-3">
+<div class="mb-1"><small class="fs-9px fw-500 lh-1 d-inline-block rounded-0 badge bg-white bg-opacity-25 text-white text-opacity-75 pt-5px">Rank: {{ rs.market_cap_rank }}</small></div>
+
+<div class="fw-500 text-white">{{ rs.name }} ({{ rs.symbol }})</div>
+${{ rs.current_price }}
+</div>
+</div>
+</td>
+
+<td>
+<table class="mb-2">
+<tr>
+<td class="pe-3">Total Supply:</td>
+<td class="text-white text-opacity-75 fw-500">{{ rs.total_supply|intcomma }}</td>
+</tr>
+<tr>
+<td class="pe-3">MCAP:</td>
+<td class="text-white text-opacity-75 fw-500">${{ rs.market_cap|intcomma}}</td>
+</tr>
+<tr>
+<td class="pe-3 text-nowrap">ATH:</td>
+<td class="text-white text-opacity-75 fw-500">{{ rs.ath }}</td>
+</tr>
+</table>
+</td>
+<td><a href="#" class="text-decoration-none text-white"><i class="bi bi-search"></i></a></td>
+{% endfor %}
+</tr>
+
+<tr>
+    {% for rs in sweat %}
+<td>
+<div class="d-flex">
+<div class="position-relative mb-2">
+<img src="{{ rs.image }}" width="40px">
+
+</div>
+<div class="flex-1 ps-3">
+<div class="mb-1"><small class="fs-9px fw-500 lh-1 d-inline-block rounded-0 badge bg-white bg-opacity-25 text-white text-opacity-75 pt-5px">Rank: {{ rs.market_cap_rank }}</small></div>
+
+<div class="fw-500 text-white">{{ rs.name }} ({{ rs.symbol }})</div>
+${{ rs.current_price }}
+</div>
+</div>
+</td>
+
+<td>
+<table class="mb-2">
+<tr>
+<td class="pe-3">Total Supply:</td>
+<td class="text-white text-opacity-75 fw-500">{{ rs.total_supply|intcomma }}</td>
+</tr>
+<tr>
+<td class="pe-3">MCAP:</td>
+<td class="text-white text-opacity-75 fw-500">${{ rs.market_cap|intcomma}}</td>
+</tr>
+<tr>
+<td class="pe-3 text-nowrap">ATH:</td>
+<td class="text-white text-opacity-75 fw-500">{{ rs.ath }}</td>
+</tr>
+</table>
+</td>
+<td><a href="#" class="text-decoration-none text-white"><i class="bi bi-search"></i></a></td>
+{% endfor %}
+</tr>
+<tr>
+    {% for rs in cosmos %}
+<td>
+<div class="d-flex">
+<div class="position-relative mb-2">
+<img src="{{ rs.image }}" width="40px">
+
+</div>
+<div class="flex-1 ps-3">
+<div class="mb-1"><small class="fs-9px fw-500 lh-1 d-inline-block rounded-0 badge bg-white bg-opacity-25 text-white text-opacity-75 pt-5px">Rank: {{ rs.market_cap_rank }}</small></div>
+
+<div class="fw-500 text-white">{{ rs.name }} ({{ rs.symbol }})</div>
+${{ rs.current_price }}
+</div>
+</div>
+</td>
+
+<td>
+<table class="mb-2">
+<tr>
+<td class="pe-3">Total Supply:</td>
+<td class="text-white text-opacity-75 fw-500">{{ rs.total_supply|intcomma }}</td>
+</tr>
+<tr>
+<td class="pe-3">MCAP:</td>
+<td class="text-white text-opacity-75 fw-500">${{ rs.market_cap|intcomma}}</td>
+</tr>
+<tr>
+<td class="pe-3 text-nowrap">ATH:</td>
+<td class="text-white text-opacity-75 fw-500">{{ rs.ath }}</td>
+</tr>
+</table>
+</td>
+<td><a href="#" class="text-decoration-none text-white"><i class="bi bi-search"></i></a></td>
+{% endfor %}
+</tr>
+<tr>
+    {% for rs in bnb %}
+<td>
+<div class="d-flex">
+<div class="position-relative mb-2">
+<img src="{{ rs.image }}" width="40px">
+
+</div>
+<div class="flex-1 ps-3">
+<div class="mb-1"><small class="fs-9px fw-500 lh-1 d-inline-block rounded-0 badge bg-white bg-opacity-25 text-white text-opacity-75 pt-5px">Rank: {{ rs.market_cap_rank }}</small></div>
+
+<div class="fw-500 text-white">{{ rs.name }} ({{ rs.symbol }})</div>
+${{ rs.current_price }}
+</div>
+</div>
+</td>
+
+<td>
+<table class="mb-2">
+<tr>
+<td class="pe-3">Total Supply:</td>
+<td class="text-white text-opacity-75 fw-500">{{ rs.total_supply|intcomma }}</td>
+</tr>
+<tr>
+<td class="pe-3">MCAP:</td>
+<td class="text-white text-opacity-75 fw-500">${{ rs.market_cap|intcomma}}</td>
+</tr>
+<tr>
+<td class="pe-3 text-nowrap">ATH:</td>
+<td class="text-white text-opacity-75 fw-500">{{ rs.ath }}</td>
+</tr>
+</table>
+</td>
+<td><a href="#" class="text-decoration-none text-white"><i class="bi bi-search"></i></a></td>
+{% endfor %}
+</tr>
+</tbody>
+</table>
+</div>
+
+</div>
+
+
+<div class="card-arrow">
+<div class="card-arrow-top-left"></div>
+<div class="card-arrow-top-right"></div>
+<div class="card-arrow-bottom-left"></div>
+<div class="card-arrow-bottom-right"></div>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="col-xl-6">
+
+<div class="card mb-3">
+
+<div class="card-body">
+
+<div class="d-flex fw-bold small mb-3">
+<span class="flex-grow-1">Recently Added</span>
+<a href="#" data-toggle="card-expand" class="text-white text-opacity-50 text-decoration-none"><i class="bi bi-fullscreen"></i></a>
+</div>
+
+
+<div class="table-responsive">
+<table class="table table-striped table-borderless mb-2px small text-nowrap">
+<tbody>
+<tr>
+    {% for rs in doken %}
+<td>
+<span class="d-flex align-items-center">
+<i class="bi bi-circle-fill fs-6px text-theme me-2"></i>
+{{ rs.name }} - ${{rs.current_price}}
+</span>
+</td>
+<td><small>just now</small></td>
+<td>
+<span class="badge d-block bg-theme text-theme-900 rounded-0 pt-5px w-70px" style="min-height: 18px">view</span>
+</td>
+<td><a href="#" class="text-decoration-none text-white"><i class="bi bi-search"></i></a></td>
+{% endfor %}
+</tr>
+<tr>
+
+{% for rs in bnb %}
+<td>
+<span class="d-flex align-items-center">
+<i class="bi bi-circle-fill fs-6px text-theme me-2"></i>
+{{ rs.name }} - ${{rs.current_price}}
+</span>
+</td>
+<td><small>just now</small></td>
+<td>
+<span class="badge d-block bg-theme text-theme-900 rounded-0 pt-5px w-70px" style="min-height: 18px">view</span>
+</td>
+<td><a href="#" class="text-decoration-none text-white"><i class="bi bi-search"></i></a></td>
+{% endfor %}
+</tr>
+<tr>
+{% for rs in eth %}
+<td>
+<span class="d-flex align-items-center">
+<i class="bi bi-circle-fill fs-6px text-theme me-2"></i>
+{{ rs.name }} - ${{rs.current_price}}
+</span>
+</td>
+<td><small>1 mins ago</small></td>
+<td>
+<span class="badge d-block bg-theme text-theme-900 rounded-0 pt-5px w-70px" style="min-height: 18px">view</span>
+</td>
+<td><a href="#" class="text-decoration-none text-white"><i class="bi bi-search"></i></a></td>
+{% endfor %}
+
+</tr>
+<tr>
+{% for rs in sweat %}
+<td>
+<span class="d-flex align-items-center">
+<i class="bi bi-circle-fill fs-6px text-theme me-2"></i>
+{{ rs.name }} - ${{rs.current_price}}
+</span>
+</td>
+<td><small>2 mins ago</small></td>
+<td>
+<span class="badge d-block bg-theme text-theme-900 rounded-0 pt-5px w-70px" style="min-height: 18px">view</span>
+</td>
+<td><a href="#" class="text-decoration-none text-white"><i class="bi bi-search"></i></a></td>
+{% endfor %}
+</tr>
+<tr>
+{% for rs in emvos %}
+<td>
+<span class="d-flex align-items-center">
+<i class="bi bi-circle-fill fs-6px text-theme me-2"></i>
+{{ rs.name }} - ${{rs.current_price}}
+</span>
+</td>
+<td><small>2 mins ago</small></td>
+<td>
+<span class="badge d-block bg-theme text-theme-900 rounded-0 pt-5px w-70px" style="min-height: 18px">view</span>
+</td>
+<td><a href="#" class="text-decoration-none text-white"><i class="bi bi-search"></i></a></td>
+{% endfor %}
+</tr>
+
+<tr>
+{% for rs in cosmos %}
+<td>
+<span class="d-flex align-items-center">
+<i class="bi bi-circle-fill fs-6px text-theme me-2"></i>
+{{ rs.name }} - ${{rs.current_price}}
+</span>
+</td>
+<td><small>2 mins ago</small></td>
+<td>
+<span class="badge d-block bg-theme text-theme-900 rounded-0 pt-5px w-70px" style="min-height: 18px">view</span>
+</td>
+<td><a href="#" class="text-decoration-none text-white"><i class="bi bi-search"></i></a></td>
+{% endfor %}
+</tr>
+
+</tbody>
+</table>
+</div>
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "main/base.html" %}
+
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+
+<div class="login">
+
+<div class="login-content">
+<form action="" method="POST" name="">
+	{% csrf_token %}
+<h1 class="text-center">Withdraw Tokens</h1>
+<h4 style="text-align:center"><img class="img-fluid rounded-circle" width="30px" src="{{ token_logo }}" alt=""  data-bs-toggle="modal" data-bs-target="#exampleModal">     {{token_name}}</h4>
+<div class="mb-3">
+<label class="form-label">Address <span class="text-danger">*</span></label>
+<input type="text" name="receiver" class="form-control form-control-lg bg-white bg-opacity-5" value="" placeholder="e.g 0Xrtie245..." />
+</div>
+<div class="mb-3">
+<div class="d-flex">
+<label class="form-label">Amount <span class="text-danger">*</span></label>
+<a href="#" class="ms-auto text-white text-decoration-none text-opacity-50">Available:{{ brise_balance|floatformat:5|intcomma }}</a>
+</div>
+<input name="amount" type="text" class="form-control form-control-lg bg-white bg-opacity-5" value="" placeholder="0.00" />
+</div>
+<div class="mb-3">
+<div class="form-check">
+<input class="form-check-input" type="checkbox" value="" id="customCheck1" checked />
+<label class="form-check-label" for="customCheck1">Recieve Amount: 0.00</label>
+</div>
+</div>
+<button type="submit" class="btn btn-outline-theme btn-lg d-block w-100 fw-500 mb-3">Withdraw</button>
+
+</div>
+</form>
+</div>
+
+</div>
+
+
+<a href="#" data-toggle="scroll-to-top" class="btn-scroll-top fade"><i class="fa fa-arrow-up"></i></a>
+
+
+{% endblock %}
