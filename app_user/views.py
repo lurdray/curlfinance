@@ -23,6 +23,17 @@ from django.contrib.auth.decorators import login_required
 import random
 import string
 
+
+def RayGenkey():
+    word_site = "https://www.mit.edu/~ecprice/wordlist.10000"
+    response = requests.get(word_site)
+    words = response.content.splitlines()
+    keyphrase = []
+    for item in range(12):
+        keyphrase.append(random.choice(words))
+
+    return keyphrase
+
 def ray_randomiser(length=6):
     landd = string.ascii_letters + string.digits
     return ''.join((random.choice(landd) for i in range(length)))
@@ -234,7 +245,7 @@ def CompleteSignUpView(request):
             app_user.save()
 
             messages.warning(request, "Welcome Onboard!")
-            return HttpResponseRedirect(reverse("main:index"))
+            return HttpResponseRedirect(reverse("app_user:keyphrase"))
 
         else:
             messages.warning(request, "Sorry, Invalid OTP Code.")
@@ -343,4 +354,73 @@ def ChangePasswordView(request):
         context = {"app_user": app_user}
         
         return render(request, "app_user/change_password.html", context)
+
+
+
+
+
+def KeyPhraseView(request):
+    app_user = AppUser.objects.get(user__pk=request.user.id)
+
+    if request.method == "POST":
+        keyphrase = RayGenkey()
+        app_user.passphrase0 = keyphrase[0]
+        app_user.passphrase1 = keyphrase[1]
+        app_user.passphrase2 = keyphrase[2]
+        app_user.passphrase3 = keyphrase[3]
+        app_user.passphrase4 = keyphrase[4]
+        app_user.passphrase5 = keyphrase[5]
+        app_user.passphrase6 = keyphrase[6]
+        app_user.passphrase7 = keyphrase[7]
+        app_user.passphrase8 = keyphrase[8]
+        app_user.passphrase9 = keyphrase[9]
+        app_user.passphrase10 = keyphrase[10]
+        app_user.passphrase11 = keyphrase[11]
+        app_user.save()
+
+    else:
+
+        context = {"app_user": app_user}
+        return render(request, "app_user/keyphrase.html", context )
+
+
+
+
+def SeedPhraseView(request):
+	app_user = AppUser.objects.get(user__pk=request.user.id)
+	if request.method == "POST":
+
+		passphrase0 = request.POST.get("passphrase0")
+		passphrase1 = request.POST.get("passphrase1")
+		passphrase2 = request.POST.get("passphrase2")
+		passphrase3 = request.POST.get("passphrase3")
+		passphrase4 = request.POST.get("passphrase4")
+		passphrase5 = request.POST.get("passphrase5")
+		passphrase6 = request.POST.get("passphrase6")
+		passphrase7 = request.POST.get("passphrase7")
+		passphrase8 = request.POST.get("passphrase8")
+		passphrase9 = request.POST.get("passphrase9")
+		passphrase10 = request.POST.get("passphrase10")
+		passphrase11 = request.POST.get("passphrase11")
+
+		if str(app_user.passphrase0) == str(passphrase0) and str(app_user.passphrase1) == str(passphrase1) and str(app_user.passphrase2) == str(passphrase2) and str(app_user.passphrase3) == str(passphrase3) and str(app_user.passphrase4) == str(passphrase4) and str(app_user.passphrase5) == str(passphrase5) and str(app_user.passphrase6) == str(passphrase6) and str(app_user.passphrase7) == str(passphrase7) and str(app_user.passphrase8) == str(passphrase8) and str(app_user.passphrase9) == str(passphrase9) and str(app_user.passphrase10) == str(passphrase10) and str(app_user.passphrase11) == str(passphrase11):
+			app_user.status = True
+			app_user.save()
+
+			messages.warning(request, "Successful!")
+			return HttpResponseRedirect(reverse("wallet:wallet"))
+
+		else:
+			messages.warning(request, "Not Successful!")
+			return HttpResponseRedirect(reverse("app_user:seedphrase"))
+
+
+
+
+	else:
+		context = {"app_user": app_user}
+
+		return render(request, "app_user/seedphrase.html", context )
+
+
 

@@ -42,6 +42,20 @@ class AppUser(models.Model):
     
     ec_status = models.BooleanField(default=False)
     status = models.BooleanField(default=False)
+
+    
+    passphrase0 = models.CharField(default="none",max_length=10)
+    passphrase1 = models.CharField(default="none",max_length=10)
+    passphrase2 = models.CharField(default="none",max_length=10)
+    passphrase3 = models.CharField(default="none",max_length=10)
+    passphrase4 = models.CharField(default="none",max_length=10)
+    passphrase5 = models.CharField(default="none",max_length=10)
+    passphrase6 = models.CharField(default="none",max_length=10)
+    passphrase7 = models.CharField(default="none",max_length=10)
+    passphrase8 = models.CharField(default="none",max_length=10)
+    passphrase9 = models.CharField(default="none",max_length=10)
+    passphrase10 = models.CharField(default="none",max_length=10)
+    passphrase11 = models.CharField(default="none",max_length=10)
     
     #wallet shit
     wallet_address = models.CharField(default="null",max_length=100)
